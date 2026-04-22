@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    // Handles GUI events for StudyMate application
     @FXML
     private TextField dayField;
 
