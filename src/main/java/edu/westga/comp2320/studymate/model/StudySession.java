@@ -2,6 +2,7 @@ package edu.westga.comp2320.studymate.model;
 
 public class StudySession {
 
+    // StudySession model handles validation and formatting of study data
     private String day;
     private String subject;
     private String task;
