@@ -1,5 +1,8 @@
 package edu.westga.comp2320.studymate.model;
 
+/**
+ * Represents a study session with a day, subject, and optional task.
+ */
 public class StudySession {
 
     // StudySession model handles validation and formatting of study data
@@ -7,9 +10,16 @@ public class StudySession {
     private String subject;
     private String task;
 
+    /**
+     * Creates a StudySession.
+     *
+     * @param day     the day of the week (M, T, W, R, F)
+     * @param subject the subject (required)
+     * @param task    the task (optional)
+     */
     public StudySession(String day, String subject, String task) {
 
-        if (!isValidDay(day)) {
+        if (!this.isValidDay(day)) {
             throw new IllegalArgumentException("Invalid day");
         }
 
@@ -17,40 +27,66 @@ public class StudySession {
             throw new IllegalArgumentException("Subject required");
         }
 
-        this.day = convertDay(day);
+        this.day = this.convertDay(day);
         this.subject = subject;
         this.task = task;
     }
 
+    /**
+     * Checks if the day is valid.
+     */
     private boolean isValidDay(String day) {
-        if (day == null) return false;
+        if (day == null) {
+            return false;
+        }
 
-        String d = day.toUpperCase();
+        String dayUpper = day.toUpperCase();
 
-        return d.equals("M") || d.equals("T") ||
-                d.equals("W") || d.equals("R") ||
-                d.equals("F");
+        return dayUpper.equals("M") || dayUpper.equals("T") ||
+                dayUpper.equals("W") || dayUpper.equals("R") ||
+                dayUpper.equals("F");
     }
 
+    /**
+     * Converts a single-letter day into full name.
+     */
     private String convertDay(String day) {
         switch (day.toUpperCase()) {
-            case "M": return "Monday";
-            case "T": return "Tuesday";
-            case "W": return "Wednesday";
-            case "R": return "Thursday";
-            case "F": return "Friday";
+            case "M":
+                return "Monday";
+            case "T":
+                return "Tuesday";
+            case "W":
+                return "Wednesday";
+            case "R":
+                return "Thursday";
+            case "F":
+                return "Friday";
+            default:
+                return "";
         }
-        return "";
     }
 
+    /**
+     * Returns the day of the study session.
+     * @return the day
+     */
     public String getDay() {
         return this.day;
     }
 
+    /**
+     * Returns the subject of the study session.
+     * @return the subject
+     */
     public String getSubject() {
         return this.subject;
     }
 
+    /**
+     * Returns the task of the study session.
+     * @return the task
+     */
     public String getTask() {
         return this.task;
     }

@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+/**
+ * Handles GUI events for StudyMate application.
+ */
 public class Main extends Application {
 
-    // Handles GUI events for StudyMate application
     @FXML
     private TextField dayField;
 
@@ -31,65 +33,69 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/StudyMateView.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/StudyMateView.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("StudyMate");
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Launches the StudyMate application.
+     *
+     * @param args command line arguments
+     */
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         launch();
     }
 
-    // ================= ADD =================
+
     @FXML
     private void handleAdd() {
-        String day = dayField.getText().trim();
-        String subject = subjectField.getText().trim();
-        String task = taskField.getText().trim();
+        String day = this.dayField.getText().trim();
+        String subject = this.subjectField.getText().trim();
+        String task = this.taskField.getText().trim();
 
         boolean valid = true;
 
-        // Day validation
-        if (!(day.equalsIgnoreCase("M") || day.equalsIgnoreCase("T")
-                || day.equalsIgnoreCase("W") || day.equalsIgnoreCase("R")
-                || day.equalsIgnoreCase("F"))) {
+        if (!(day.equalsIgnoreCase("M") || day.equalsIgnoreCase("T") ||
+                day.equalsIgnoreCase("W") || day.equalsIgnoreCase("R") ||
+                day.equalsIgnoreCase("F"))) {
 
-            dayError.setText("must be M, T, W, R, or F");
+            this.dayError.setText("must be M, T, W, R, or F");
             valid = false;
         } else {
-            dayError.setText("");
+            this.dayError.setText("");
         }
 
-        // Subject validation
         if (subject.isEmpty()) {
-            subjectError.setText("required");
+            this.subjectError.setText("required");
             valid = false;
         } else {
-            subjectError.setText("");
+            this.subjectError.setText("");
         }
 
         if (!valid) {
-            return; // 🚨 STOP if invalid
+            return;
         }
 
         StudySession session = new StudySession(day, subject, task);
-        listView.getItems().add(session);
+        this.listView.getItems().add(session);
 
-        // Select new item
-        listView.getSelectionModel().selectLast();
+        this.listView.getSelectionModel().selectLast();
 
-        // Clear fields
-        dayField.clear();
-        subjectField.clear();
-        taskField.clear();
+        this.dayField.clear();
+        this.subjectField.clear();
+        this.taskField.clear();
     }
 
-    // ================= DELETE =================
+    /**
+     * Handles deleting a study session.
+     */
     @FXML
     private void handleDelete() {
-        StudySession selected = listView.getSelectionModel().getSelectedItem();
+        StudySession selected = this.listView.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -99,46 +105,45 @@ public class Main extends Application {
             return;
         }
 
-        listView.getItems().remove(selected);
+        this.listView.getItems().remove(selected);
 
-        dayField.clear();
-        subjectField.clear();
-        taskField.clear();
-        dayError.setText("");
-        subjectError.setText("");
+        this.dayField.clear();
+        this.subjectField.clear();
+        this.taskField.clear();
+        this.dayError.setText("");
+        this.subjectError.setText("");
     }
 
-    // ================= LIST CLICK =================
+    /**
+     * Initializes GUI behavior.
+     */
     @FXML
     public void initialize() {
 
-        // Populate fields when clicking list
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        this.listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-                dayField.setText(newVal.getDay().substring(0,1)); // back to M,T,W...
-                subjectField.setText(newVal.getSubject());
-                taskField.setText(newVal.getTask());
+                this.dayField.setText(newVal.getDay().substring(0, 1));
+                this.subjectField.setText(newVal.getSubject());
+                this.taskField.setText(newVal.getTask());
             }
         });
 
-        // ================= DYNAMIC VALIDATION (TASK 6) =================
-        dayField.textProperty().addListener(new javafx.beans.value.ChangeListener<String>() {
+        this.dayField.textProperty().addListener(new javafx.beans.value.ChangeListener<String>() {
             @Override
-            public void changed(javafx.beans.value.ObservableValue<? extends String> observable,
-                                String oldValue, String newValue) {
+            public void changed(javafx.beans.value.ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
                 if (newValue.isEmpty()) {
-                    dayError.setText("");
+                    Main.this.dayError.setText("");
                     return;
                 }
 
-                if (!(newValue.equalsIgnoreCase("M") || newValue.equalsIgnoreCase("T")
-                        || newValue.equalsIgnoreCase("W") || newValue.equalsIgnoreCase("R")
-                        || newValue.equalsIgnoreCase("F"))) {
+                if (!(newValue.equalsIgnoreCase("M") || newValue.equalsIgnoreCase("T") ||
+                        newValue.equalsIgnoreCase("W") || newValue.equalsIgnoreCase("R") ||
+                        newValue.equalsIgnoreCase("F"))) {
 
-                    dayError.setText("must be M, T, W, R, or F");
+                    Main.this.dayError.setText("must be M, T, W, R, or F");
                 } else {
-                    dayError.setText("");
+                    Main.this.dayError.setText("");
                 }
             }
         });
