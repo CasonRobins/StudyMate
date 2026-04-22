@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class StudyMateApp extends Application {
-
+    // Main application launcher for StudyMate
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/StudyMateView.fxml"));
