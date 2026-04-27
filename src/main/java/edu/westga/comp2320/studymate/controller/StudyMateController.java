@@ -3,6 +3,8 @@ package edu.westga.comp2320.studymate.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +36,15 @@ public class StudyMateController {
         mondayRadio.setSelected(true);
         errorLabel.setText("");
 
-        // 🔥 LIST CLICK SYNC
+        // LIST CLICK SYNC
         listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selected) -> {
             if (selected != null) {
                 updateUIFromSelection(selected);
             }
         });
+
+        // SAVE MENU ACTION
+        saveMenuItem.setOnAction(e -> handleSave());
     }
 
     private String getSelectedDay() {
@@ -90,16 +95,15 @@ public class StudyMateController {
         }
     }
 
-    // 🔥 THIS IS THE NEW PART
     private void updateUIFromSelection(String selected) {
 
-        // Reset everything first
+        // Reset checkboxes
         englCheck.setSelected(false);
         histCheck.setSelected(false);
         mathCheck.setSelected(false);
         compCheck.setSelected(false);
 
-        // Example format: "Monday: ENGL - hugs"
+        // Parse string
         String[] parts = selected.split(": ");
         String day = parts[0];
 
@@ -126,5 +130,17 @@ public class StudyMateController {
 
         // Set task
         taskField.setText(task);
+    }
+
+    // 🔥 FINAL FEATURE
+    private void handleSave() {
+        try (FileWriter writer = new FileWriter("studymate.txt")) {
+            for (String item : listView.getItems()) {
+                writer.write(item + "\n");
+            }
+            errorLabel.setText("Saved to studymate.txt");
+        } catch (IOException e) {
+            errorLabel.setText("Error saving file");
+        }
     }
 }
