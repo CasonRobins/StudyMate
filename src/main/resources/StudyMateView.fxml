@@ -2,76 +2,57 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0"
+<VBox spacing="10"
       xmlns="http://javafx.com/javafx/25"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="edu.westga.comp2320.studymate.controller.StudyMateController">
 
     <padding>
-        <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+        <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <children>
+    <!-- MENU -->
+    <MenuBar>
+        <Menu text="File">
+            <MenuItem fx:id="saveMenuItem" text="Save"/>
+        </Menu>
+    </MenuBar>
 
-        <!-- MENU -->
-        <MenuBar>
-            <menus>
-                <Menu text="File">
-                    <items>
-                        <MenuItem fx:id="saveMenuItem" text="Save"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+    <!-- DAY -->
+    <Label text="Day of week:"/>
 
-        <!-- DAY -->
-        <Label text="Day of week:"/>
-        <HBox spacing="5">
-            <children>
-                <RadioButton fx:id="mondayRadio" text="M">
-                    <toggleGroup>
-                        <ToggleGroup fx:id="dayGroup"/>
-                    </toggleGroup>
-                </RadioButton>
-                <RadioButton fx:id="tuesdayRadio" text="T" toggleGroup="$dayGroup"/>
-                <RadioButton fx:id="wednesdayRadio" text="W" toggleGroup="$dayGroup"/>
-                <RadioButton fx:id="thursdayRadio" text="R" toggleGroup="$dayGroup"/>
-                <RadioButton fx:id="fridayRadio" text="F" toggleGroup="$dayGroup"/>
-            </children>
-        </HBox>
+    <HBox spacing="10">
+        <RadioButton fx:id="mondayRadio" text="M"/>
+        <RadioButton fx:id="tuesdayRadio" text="T"/>
+        <RadioButton fx:id="wednesdayRadio" text="W"/>
+        <RadioButton fx:id="thursdayRadio" text="R"/>
+        <RadioButton fx:id="fridayRadio" text="F"/>
+    </HBox>
 
-        <!-- SUBJECT -->
-        <Label text="Subject:"/>
-        <HBox spacing="5">
-            <children>
-                <CheckBox fx:id="englCheck" text="ENGL"/>
-                <CheckBox fx:id="histCheck" text="HIST"/>
-                <CheckBox fx:id="mathCheck" text="MATH"/>
-                <CheckBox fx:id="compCheck" text="COMP"/>
-            </children>
-        </HBox>
+    <!-- SUBJECT -->
+    <Label text="Subject:"/>
+    <HBox spacing="10">
+        <CheckBox fx:id="englCheck" text="ENGL"/>
+        <CheckBox fx:id="histCheck" text="HIST"/>
+        <CheckBox fx:id="mathCheck" text="MATH"/>
+        <CheckBox fx:id="compCheck" text="COMP"/>
+    </HBox>
 
-        <!-- ERROR -->
-        <Label fx:id="errorLabel" textFill="RED"/>
+    <Label fx:id="errorLabel" textFill="RED"/>
 
-        <!-- TASK -->
-        <Label text="Task:"/>
-        <TextField fx:id="taskField"/>
+    <!-- TASK -->
+    <Label text="Task:"/>
+    <TextField fx:id="taskField"/>
 
-        <!-- BUTTONS -->
-        <HBox spacing="10">
-            <children>
-                <Button text="Add" onAction="#handleAdd"/>
-                <Button text="Delete" onAction="#handleDelete"/>
-            </children>
-        </HBox>
+    <!-- BUTTONS -->
+    <HBox spacing="10">
+        <Button text="Add" onAction="#handleAdd"/>
+        <Button text="Delete" onAction="#handleDelete"/>
+    </HBox>
 
-        <!-- LIST -->
-        <ListView fx:id="listView" prefHeight="150"/>
-
-    </children>
+    <!-- LIST -->
+    <ListView fx:id="listView" prefHeight="150"/>
 
 </VBox>
