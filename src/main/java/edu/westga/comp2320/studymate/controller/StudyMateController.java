@@ -33,6 +33,13 @@ public class StudyMateController {
     public void initialize() {
         mondayRadio.setSelected(true);
         errorLabel.setText("");
+
+        // 🔥 LIST CLICK SYNC
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selected) -> {
+            if (selected != null) {
+                updateUIFromSelection(selected);
+            }
+        });
     }
 
     private String getSelectedDay() {
@@ -81,5 +88,43 @@ public class StudyMateController {
         if (index >= 0) {
             listView.getItems().remove(index);
         }
+    }
+
+    // 🔥 THIS IS THE NEW PART
+    private void updateUIFromSelection(String selected) {
+
+        // Reset everything first
+        englCheck.setSelected(false);
+        histCheck.setSelected(false);
+        mathCheck.setSelected(false);
+        compCheck.setSelected(false);
+
+        // Example format: "Monday: ENGL - hugs"
+        String[] parts = selected.split(": ");
+        String day = parts[0];
+
+        String[] subjectTask = parts[1].split(" - ");
+        String subject = subjectTask[0];
+        String task = subjectTask[1];
+
+        // Set day
+        switch (day) {
+            case "Monday": mondayRadio.setSelected(true); break;
+            case "Tuesday": tuesdayRadio.setSelected(true); break;
+            case "Wednesday": wednesdayRadio.setSelected(true); break;
+            case "Thursday": thursdayRadio.setSelected(true); break;
+            case "Friday": fridayRadio.setSelected(true); break;
+        }
+
+        // Set subject
+        switch (subject) {
+            case "ENGL": englCheck.setSelected(true); break;
+            case "HIST": histCheck.setSelected(true); break;
+            case "MATH": mathCheck.setSelected(true); break;
+            case "COMP": compCheck.setSelected(true); break;
+        }
+
+        // Set task
+        taskField.setText(task);
     }
 }
